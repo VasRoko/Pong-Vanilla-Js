@@ -9,7 +9,7 @@ var cWidth = sCanvas.width;
 var img = new Image();
 img.src= 'assets/background.jpg'; 
 
-var sound = new Audio('people-cheering.mp3');
+var sound = new Audio('assets/people-cheering.mp3');
 var changedirection = false; //
 var score1 = 0;  // for score board
 var score2 = 0;  // for score board
@@ -19,7 +19,7 @@ var score2 = 0;  // for score board
 //Objects
 //******************
  //create paddle object
-    class Paddle{
+class Paddle{
         constructor(x,y){
             this.xPos = 750;
             this.yPos = 150;
@@ -38,7 +38,7 @@ var score2 = 0;  // for score board
         }
     } // end paddle object
 
-     class PaddleComputer {
+class PaddleComputer {
         constructor(x,y){
             this.xPos = 25;
             this.yPos = 150;
@@ -159,6 +159,7 @@ function checkKeys() {
          }
     }
 
+    
 
     if (keysDown[87]) {
         if(player2.yPos > 0){
