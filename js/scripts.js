@@ -54,7 +54,7 @@ class PaddleComputer {
             this.yPos = 150;
             this.cHeight = 130;
             this.cWidth = 30;
-            this.colour = "darkred";
+            this.colour = "blue";
             this.speed = 7;
         }
 
@@ -71,7 +71,7 @@ class PaddleComputer {
 class Sphere {
     constructor() {
             this.radius = (10);
-            this.colour = "red";
+            this.colour = "white";
             this.xPos = 400;
             this.yPos = 230;
             this.speedY = 0;
@@ -197,16 +197,37 @@ function checkKeys() {
 
     function winner() 
     {
+        var winner = '';
+        var StartButton = document.getElementById('startGame');
+
         if(score1 == 10)
-        {
-            alert("PLAYER 2 is the !!!!!!******* WINNER **********!!!!!!");
-            location.reload();
+        {   
+            StartButton.setAttribute("disabled", false);
+
+            if(!singlePlayer)
+            {
+                winner = 'You !*** Lost ***!';
+            } else {
+                winner = 'PLAYER 2 is the'  + ' !*** WINNER ***!';
+            }
         }
-        else if (score2 == 10)
+        else if (score2 == 2)
         {
-            alert(" PLAYER 1 is the !!!!!!******* WINNER **********!!!!!!");
-            location.reload();
-        }
+            StartButton.setAttribute("disabled", false);
+            if(singlePlayer)
+            {
+                winner = 'PLAYER 1 is the !*** WINNER ***!';
+            } 
+        } 
+        else 
+        {
+            StartButton.removeAttribute("disabled");
+        } 
+
+        ctx.font = "50px Ariel"
+        ctx.fillStyle = "White"
+
+        ctx.fillText(winner, 100, 250);
     }
 
     //*********************
