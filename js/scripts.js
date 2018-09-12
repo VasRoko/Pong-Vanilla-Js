@@ -7,13 +7,23 @@ var ctx = sCanvas.getContext("2d");
 var cHeight = sCanvas.height;
 var cWidth = sCanvas.width;
 var img = new Image();
-img.src= 'assets/background.jpg'; 
-
+var singlePlayer = false;
 var sound = new Audio('assets/people-cheering.mp3');
 var changedirection = false; //
 var score1 = 0;  // for score board
 var score2 = 0;  // for score board
 
+var singlePlayerButton = document.getElementById('singlePlayer');
+
+function singlePlayerMode() {
+    singlePlayer = !singlePlayer;
+
+    if(singlePlayer) {
+        singlePlayerButton.innerHTML = 'Single Player';
+    } else {
+        singlePlayerButton.innerHTML = 'Two Players';
+    }
+}
       
 //******************
 //Objects
@@ -84,11 +94,11 @@ class Sphere {
         this.xPos += this.speedX;
 
                 //bounce off the bottom wall
-        if (this.yPos >cHeight-this.radius){
-    this.speedY = - this.speedY;
-    }           //bounce off the top wall
+        if (this.yPos > cHeight-this.radius){
+            this.speedY = - this.speedY;
+        }           //bounce off the top wall
         else if(this.yPos<0+this.radius){
-    this.speedY= -this.speedY;
+            this.speedY= -this.speedY;
         }
 
     //stop ball if hit right side
@@ -101,8 +111,8 @@ class Sphere {
             }
     else if (this.xPos < 0)
         {
-            this.speedX =0;
-            this.speedY =0;
+            this.speedX = 0;
+            this.speedY = 0;
             this.xPos = cWidth;
             score2++;
             sound.play();
@@ -152,28 +162,38 @@ function checkKeys() {
         }
     }
      
-  
     else if (keysDown[40]) {
         if(player1.yPos < cHeight){
             player1.yPos += player1.speed; //down key
          }
     }
+ 
+    if(!singlePlayer)
+    {
+        if(ball.yPos > player2.yPos && ball.speedX != 0 ) {
 
-    
+            player2.yPos += player2.speed * 1;
 
-    if (keysDown[87]) {
-        if(player2.yPos > 0){
-            player2.yPos -= player2.speed; //w
+        } else if (ball.yPos < player2.yPos && ball.speedX != 0) {
+
+            player2.yPos -= player2.speed * 1;
+        
         }
-    }
-     
-    else if (keysDown[83]) {
-        if(player2.yPos < cHeight){
-            player2.yPos += player2.speed; //s
-         }
-    } 
 
-}
+    } else {
+        if (keysDown[87]) {
+            if(player2.yPos > 0){
+                player2.yPos -= player2.speed; //w
+            }
+        }
+        else if (keysDown[83]) {
+            if(player2.yPos < cHeight){
+                player2.yPos += player2.speed; //s
+            }
+        } 
+    
+    }
+} 
 
     function winner() 
     {
@@ -197,8 +217,7 @@ function checkKeys() {
         ctx.font = "60px Ariel"
         ctx.fillStyle = "White"
         ctx.fillText(score1, 355,170);
-        ctx.fillText(score2, 425,170);
-
+        ctx.fillText(score2, 415,170);
     }
     //*********************
     // launch the ball from the centre, left and right, on function "generate ball"
@@ -208,11 +227,13 @@ function checkKeys() {
     {
         ball.xPos = 400;
         ball.yPos = 230;
-        ball.speedY = 5 + 5* Math.random();
-        ball.speedX = 5 + 5* Math.random();
+        ball.speedY = 5 + 5 * Math.random();
+        ball.speedX = 5 + 5 * Math.random();
+
         changedirection = true * Math.random;
     }   
 function render() {
+
     requestAnimationFrame(render);
     ctx.clearRect(0, 0, cWidth, cHeight);
     ball.drawMe();
@@ -222,8 +243,6 @@ function render() {
     checkKeys();
     scoreBoard();
     winner(); 
-
-
 
     if ((player1.yPos + player1.cHeight) > cHeight)
     {

@@ -10,9 +10,10 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-<div class="buttons">
-    <input type="button" class="button" onclick="ballStart();" value="Start Game" />
-    <input type="button" class="button" onclick="reload();" value="Restart Game" />
+    <div class="buttons">
+        <button class="button" onclick="ballStart()">Start Game</button>
+        <button id="singlePlayer" class="button" onclick="singlePlayerMode()">Two Players</button>
+        <button class="button" onclick="reload()">Restart Game</button>
     </div>
     <canvas id="sCanvas" class="sCanvas" width="800" height="450" style="border: solid;"></canvas>
     <script src="js/scripts.js"></script>
